@@ -142,8 +142,8 @@ func readUsers(c *cli.Context) (users []User, err error) {
 
 func blockUser(user User, api *anaconda.TwitterApi) (twitterUser anaconda.User, err error) {
 
-	// userIDが0の時はscreenNameでブロックする
-	if user.id == 0 {
+	// userIDが0かuserIDの長さが10でないと気はscreenNameでブロックする
+	if user.id == 0 || len(user.screenName) != 10 {
 		// screen_name の時
 		if twitterUser, err = api.BlockUser(user.screenName, nil); err == nil {
 			return twitterUser, nil
