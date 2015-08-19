@@ -48,11 +48,10 @@ func doBlock(c *cli.Context) {
 	}
 
 	statusChan := make(chan string)
-	for idx, user := range users {
-		fmt.Println("Blocking User", idx, user)
+	for _, user := range users {
 		go func(user User) {
 			twitterUser, err := blockUser(user, api)
-			statusChan <- strconv.Itoa(idx)
+			statusChan <- user.screenName
 			if err != nil {
 				// ブロックに失敗した時
 				failedBlock = append(failedBlock, user)
